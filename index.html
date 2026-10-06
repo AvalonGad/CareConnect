@@ -40,7 +40,7 @@ button{border:0;border-radius:10px;padding:13px 18px;font-size:14px;font-weight:
 <div class="card">
 <div class="hero">
   <h1>Create your CareConnect email signature</h1>
-  <p>Enter your details below. Your personal information and profile links are added directly to the signature.</p>
+  <p>Enter your personal details below. Company information is fixed for all CareConnect signatures.</p>
 </div>
 
 <div class="grid">
@@ -49,17 +49,15 @@ button{border:0;border-radius:10px;padding:13px 18px;font-size:14px;font-weight:
 
   <div class="field"><label for="name">Name *</label><input id="name" placeholder="e.g. John Mike" autocomplete="name"></div>
   <div class="field"><label for="title">Job title *</label><input id="title" placeholder="e.g. Senior Business Development Manager"></div>
-  <div class="field"><label for="company">Company</label><input id="company" placeholder="e.g. CareConnect"></div>
-  <div class="field"><label for="address">Address</label><input id="address" placeholder="e.g. City, Country"></div>
   <div class="field"><label for="email">Email *</label><input id="email" type="email" placeholder="name@careconnect.world" autocomplete="email"></div>
   <div class="field"><label for="phone">Phone</label><input id="phone" placeholder="+352 26 97 60 32" autocomplete="tel"></div>
-  <div class="field"><label for="careconnect">CareConnect link</label><input id="careconnect" type="url" placeholder="https://careconnect.world/"></div>
+  <div class="field"><label for="careconnect">CareConnect link</label><input id="careconnect" type="url" value="https://careconnect.world/" placeholder="https://careconnect.world/"></div>
   <div class="field"><label for="linkedin">LinkedIn profile</label><input id="linkedin" type="url" placeholder="https://www.linkedin.com/in/your-name/"></div>
 
   <button class="primary" id="copy">COPY SIGNATURE</button>
   <button class="secondary" id="select">SELECT SIGNATURE</button>
   <div class="status" id="status"></div>
-  <div class="help">Nothing is saved. Your information is used only in this browser to create the signature.</div>
+  <div class="help">Company: CareConnect Sàrl<br>2, Rue du Kiem, L-8435 Steinfort, Luxembourg<br><br>Nothing is saved. Your personal information is used only in this browser to create the signature.</div>
 </section>
 
 <section class="previewArea">
@@ -73,13 +71,12 @@ button{border:0;border-radius:10px;padding:13px 18px;font-size:14px;font-weight:
 
 <script>
 const $=id=>document.getElementById(id);
-const fields=['name','title','company','address','email','phone','careconnect','linkedin'];
+const fields=['name','title','email','phone','careconnect','linkedin'];
 const esc=v=>String(v||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const cleanUrl=v=>{v=(v||'').trim();if(!v)return'';return /^https?:\/\//i.test(v)?v:'https://'+v};
 
 function makeSignature(){
   const name=$('name').value.trim(), title=$('title').value.trim();
-  const company=$('company').value.trim(), address=$('address').value.trim();
   const email=$('email').value.trim(), phone=$('phone').value.trim();
   const careconnect=cleanUrl($('careconnect').value);
   const linkedin=cleanUrl($('linkedin').value);
@@ -90,28 +87,22 @@ function makeSignature(){
   const cc=careconnect?`<a href="${esc(careconnect)}" style="color:#173f72;text-decoration:none;font-weight:700;margin-right:14px;">CareConnect</a>`:'';
   const li=linkedin?`<a href="${esc(linkedin)}" style="color:#173f72;text-decoration:none;font-weight:700;">LinkedIn</a>`:'';
 
-  const html=`<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:#173f72;width:700px;">
+  const html=`<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:#173f72;width:520px;">
 <tr>
-<td style="vertical-align:top;padding:0 25px 0 0;width:330px;border-right:1px solid #dbe3ec;">
+<td style="vertical-align:top;">
   <div style="font-size:22px;line-height:28px;font-weight:700;color:#143f73;">${esc(name)||'John Mike'}</div>
   <div style="font-size:13px;line-height:20px;font-weight:600;color:#f58220;">${esc(title)||'Your Job Title'}</div>
-  ${company?`<div style="font-size:12px;line-height:18px;color:#78818c;margin-top:3px;">${esc(company)}</div>`:''}
-  ${address?`<div style="font-size:12px;line-height:18px;color:#78818c;">${esc(address)}</div>`:''}
+  <div style="font-size:12px;line-height:18px;color:#78818c;margin-top:3px;">CareConnect Sàrl</div>
+  <div style="font-size:12px;line-height:18px;color:#78818c;">2, Rue du Kiem, L-8435 Steinfort, Luxembourg</div>
   <div style="height:13px;line-height:13px;">&nbsp;</div>
   ${emailLine}${phoneLine}
   <div style="height:12px;line-height:12px;">&nbsp;</div>
   <div>${cc}${li}</div>
-</td>
-
-<td style="vertical-align:top;padding:0 0 0 28px;">
+  <div style="height:16px;line-height:16px;">&nbsp;</div>
   <a href="${esc(careconnect)||'https://careconnect.world/'}" style="text-decoration:none;">
     <img src="${esc(logo)}" width="190" alt="CareConnect" style="display:block;border:0;outline:none;text-decoration:none;">
   </a>
-</td>
-</tr>
-
-<tr>
-<td colspan="2" style="padding-top:18px;">
+  <div style="height:15px;line-height:15px;">&nbsp;</div>
   <div style="font-size:10px;line-height:15px;color:#7b8794;border-top:1px solid #dbe3ec;padding-top:12px;">
     This email and its attachments are intended only for the recipient(s) and may contain confidential or privileged information.
     If you are not the intended recipient, please notify the sender and delete this message.
@@ -143,9 +134,7 @@ $('copy').onclick=async()=>{
         'text/plain':new Blob([$('preview').innerText],{type:'text/plain'})
       })]);
       $('status').textContent='✓ Signature copied — paste it into Outlook, Gmail or your email client.';
-    }else{
-      selectSignature();
-    }
+    }else{selectSignature();}
   }catch(e){selectSignature();}
 };
 </script>

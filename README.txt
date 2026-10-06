@@ -7,20 +7,21 @@ assets/careconnect-logo.png
 
 This version is CareConnect-only and has no CCS logo or CCS website connection.
 
-Employees enter their own:
+FIXED COMPANY INFORMATION:
+CareConnect Sàrl
+2, Rue du Kiem, L-8435 Steinfort, Luxembourg
+
+Employees enter only their personal information:
 - Name
 - Job title
-- Company
-- Address
 - Email
 - Phone
 - CareConnect link
 - LinkedIn
 
-The CareConnect and LinkedIn links are individually entered by each employee.
-The CareConnect logo is displayed in the generated signature below the personal links.
+The CareConnect logo appears below the personal information and links, rather than beside them.
 
-The signature also includes the requested confidentiality notice at the bottom.
+The signature includes the requested confidentiality notice at the bottom.
 
 The employee data is generated only in the browser and is not saved to GitHub or any database.
 
